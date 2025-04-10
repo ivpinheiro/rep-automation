@@ -28,9 +28,6 @@ services:
     env_file: .env
     volumes:
       - whatsapp-n8n-volume:/home/node/.n8n
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - whatsapp-n8n
 networks:
@@ -38,6 +35,4 @@ networks:
     driver: bridge
 volumes:
   whatsapp-n8n-volume:
-    external: true
-  db_storage:
     external: true

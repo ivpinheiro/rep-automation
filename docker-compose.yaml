@@ -13,7 +13,9 @@ services:
       - whatsapp-n8n
   whatsapp-api:
     container_name: whatsapp_web_api
-    image: chrishubert/whatsapp-web-api:latest
+    build:
+      context: ./whatsapp-api
+      dockerfile: Dockerfile
     restart: always
     env_file: .env
     volumes:

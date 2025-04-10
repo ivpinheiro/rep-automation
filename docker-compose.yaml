@@ -13,9 +13,7 @@ services:
       - whatsapp-n8n
   whatsapp-api:
     container_name: whatsapp_web_api
-    build:
-      context: ./whatsapp-api
-      dockerfile: Dockerfile
+    image: chrishubert/whatsapp-web-api:latest
     restart: always
     env_file: .env
     volumes:
@@ -30,6 +28,9 @@ services:
     env_file: .env
     volumes:
       - whatsapp-n8n-volume:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - whatsapp-n8n
 networks:
@@ -37,4 +38,6 @@ networks:
     driver: bridge
 volumes:
   whatsapp-n8n-volume:
+    external: true
+  db_storage:
     external: true

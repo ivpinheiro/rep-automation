@@ -9,6 +9,10 @@
     {
       "url": "http://localhost/whatsapp",
       "description": "NGINX Proxy"
+    },
+    {
+      "url": "http://192.168.1.105/whatsapp",
+      "description": "NGINX Proxy"
     }
   ],
   "tags": [

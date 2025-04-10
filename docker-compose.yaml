@@ -1,0 +1,40 @@
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/config/nginx:/etc/nginx
+      - ./nginx/share:/usr/share/nginx/html
+    restart: always
+    networks:
+      - whatsapp-n8n
+  whatsapp-api:
+    container_name: whatsapp_web_api
+    build:
+      context: ./whatsapp-api
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env
+    volumes:
+      - ./whatsapp-api/sessions:/usr/src/app/sessions
+    depends_on:
+      - nginx
+    networks:
+      - whatsapp-n8n
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    env_file: .env
+    volumes:
+      - whatsapp-n8n-volume:/home/node/.n8n
+    networks:
+      - whatsapp-n8n
+networks:
+  whatsapp-n8n:
+    driver: bridge
+volumes:
+  whatsapp-n8n-volume:
+    external: true
